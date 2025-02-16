@@ -8,9 +8,9 @@ MoodSyncAI is a smart music recommendation app that detects your emotional state
 
 *  Uses facial recognition and emotion detection to analyze your mood in real time.
 
-*  Leverages computer vision and emotion detection APIs (e.g., Affectiva, Microsoft Azure Emotion API, Google Cloud Vision).
+*  Leverages computer vision using OpenCV, and ML through the use of TensorFlow and Deepface library for facial analysis with pre-trained models.
 
-*  Classifies moods into predefined categories: Happy, Sad, Stressed, Excited, Relaxed, etc.
+*  Classifies moods into predefined categories: Happy, Sad, Neutral, Surprised, Angry
 
 ##  🎵 Mood-Based Music Recommendations
 
