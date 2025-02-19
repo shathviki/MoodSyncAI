@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion-Based Playlist</title>
+    <script>
+        async function startCamera() {
+            // Show video container
+            document.getElementById('video-container').style.display = 'block';
+            document.getElementById('video-feed').src = "/video_feed?" + new Date().getTime(); // Ensures fresh feed
+            document.getElementById('detected-emotion').innerText = "Detecting emotion...";
+            document.getElementById('playlist-link').innerHTML = "";  // Clear previous link
+
+            // Wait for video processing
+            await new Promise(resolve => setTimeout(resolve, 6000));  
+
+            try {
+                // Fetch detected emotion
+                const emotionResponse = await fetch('/detect_emotion');
+                const emotionData = await emotionResponse.json();
+                const detectedEmotion = emotionData.emotion || "neutral";
+                document.getElementById('detected-emotion').innerText = "Detected Emotion: " + detectedEmotion;
+
+                // Fetch playlist based on detected emotion
+                const playlistResponse = await fetch(`/generate_playlist?emotion=${detectedEmotion}`);
+                const playlistData = await playlistResponse.json();
+
+                if (playlistData.playlist_url) {
+                    document.getElementById('playlist-link').innerHTML = `<a href="${playlistData.playlist_url}" target="_blank">View Playlist</a>`;
+                } else {
+                    document.getElementById('playlist-link').innerText = "No playlist found for this mood.";
+                }
+            } catch (error) {
+                document.getElementById('detected-emotion').innerText = "Error detecting emotion.";
+                document.getElementById('playlist-link').innerText = "Error fetching playlist.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Emotion-Based Playlist Generator</h1>
+    <button onclick="startCamera()">Get Playlist</button>
+
+    <div id="video-container" style="display:none;">
+        <h2>Detecting Emotion...</h2>
+        <img id="video-feed" src="" width="640" height="480">
+    </div>
+
+    <h2 id="detected-emotion"></h2>
+    <p id="playlist-link"></p>  <!-- This is where the playlist link will be shown -->
+</body>
+</html>

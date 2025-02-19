@@ -1,11 +1,19 @@
 import cv2
 from deepface import DeepFace
+import time
+import requests
+from collections import Counter
 
 # Load face cascade classifier
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # Start capturing video
 cap = cv2.VideoCapture(0)
+
+# Initialize variables to track emotions
+emotion_counter = Counter()
+start_time = time.time()
+duration = 5  # Run for 5 seconds
 
 while True:
     # Capture frame-by-frame
@@ -24,12 +32,14 @@ while True:
         # Extract the face ROI (Region of Interest)
         face_roi = rgb_frame[y:y + h, x:x + w]
 
-        
         # Perform emotion analysis on the face ROI
         result = DeepFace.analyze(face_roi, actions=['emotion'], enforce_detection=False)
 
         # Determine the dominant emotion
         emotion = result[0]['dominant_emotion']
+
+        # Update the emotion counter
+        emotion_counter[emotion] += 1
 
         # Draw rectangle around face and label with predicted emotion
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
@@ -38,11 +48,24 @@ while True:
     # Display the resulting frame
     cv2.imshow('Real-time Emotion Detection', frame)
 
-    # Press 'q' to exit
+    # Check if 10 seconds have passed
+    if time.time() - start_time > duration:
+        # Find the most detected emotion
+        most_common_emotion = emotion_counter.most_common(1)
+        if most_common_emotion:
+            emotion = most_common_emotion[0][0]
+            print(f"Most detected emotion: {emotion}")
+            
+            # Send emotion to Flask app via GET request
+            response = requests.get(f'http://localhost:8237/callback/create_playlist?mood={emotion}')
+            print(f"Response from Flask app: {response.text}")
+
+        break
+
+    # Press 'q' to exit early
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 # Release the capture and close all windows
 cap.release()
 cv2.destroyAllWindows()
-
