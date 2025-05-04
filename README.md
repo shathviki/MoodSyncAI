@@ -10,39 +10,19 @@ MoodSyncAI is a smart music recommendation app that detects your emotional state
 
 *  Leverages computer vision using OpenCV, and ML through the use of TensorFlow and Deepface library for facial analysis with pre-trained models.
 
-*  Classifies moods into predefined categories: Happy, Sad, Neutral, Surprised, Angry
+*  Classifies moods into predefined categories:  Anger, Disgust, Fear, Happy, Sad, Surprise, Neutral 
 
 ##  🎵 Mood-Based Music Recommendations
 
 *  Integrates with Spotify to curate mood-based playlists.
 
-*  Dynamically selects tracks that best fit your emotional state:
-
-   *  Happy: Upbeat pop, energetic EDM, or feel-good anthems.
-
-   *  Sad: Soft indie, emotional ballads, or soothing instrumentals.
-
-   * Stressed: Lo-fi beats, classical music, or calming acoustic tracks.
-
-   * Excited: High-energy rock, hip-hop, or dance music.
-
-   * Relaxed: Jazz, ambient, or nature sounds.
-
-##  🔄 User Feedback & Personalization
-
-*  Users can rate how well the recommended playlist matches their mood.
-
-*  Manual mood adjustment option to refine recommendations.
-
-*  Feedback loop to improve future suggestions through machine learning.
+*  Dynamically selects tracks that best fit your emotional state
 
 #  Tech Stack
 
-*  Frontend: React Native (for mobile) or React (for web)
+*  Frontend: HTML 
 
-*  Backend: Node.js with Express.js
-
-*  Database: MongoDB or Firebase (for user preferences & history)
+*  Backend: Python, Flask 
 
 *  Machine Learning: TensorFlow.js / OpenCV for emotion detection
 
