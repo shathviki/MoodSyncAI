@@ -1,6 +1,6 @@
 # MoodSyncAI
 
-MoodSyncAI is a smart music recommendation app that detects your emotional state using computer vision and curates a personalized Spotify playlist to match your mood. By analyzing facial expressions, MoodSyncAI enhances the music-listening experience, offering tracks that align with your current emotions.
+MoodSyncAI is a smart music recommendation tool that detects your emotional state using computer vision and curates a personalized Spotify playlist to match your mood. By analyzing facial expressions, MoodSyncAI enhances the music-listening experience, offering tracks that align with your current emotions.
 
 #  Features
 
